@@ -1,0 +1,4 @@
+<resources>
+    <string name="lbl_error_while_retrieve_data">Error while retrieving data</string>
+    <string name="lbl_error_while_setting_volley">Error while setting up Volley: </string>
+</resources>

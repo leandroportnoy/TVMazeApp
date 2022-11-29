@@ -14,11 +14,12 @@ Application whose function is to perform the listing and navigation levels using
 - Android Emulator
 
 ## Libs
-- Android Compose
-- Android Compose Navgation
-- Dagger 2
-- Hilt
+- Android Compose and Navigation
+- Dagger 2 / Hilt
 - Volley
+- Mockito, JUnit
 
-## Archteture
-- MVVM + Clean Arch
+## Structure
+**app - contains the main classes in app as a point of entry, views, viewmodels, contracts
+**common - common files between modules
+**data - contains an adaptive way of MVVM and Clean architecture 

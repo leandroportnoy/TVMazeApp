@@ -16,10 +16,10 @@ internal class MainScreenImpl @Inject constructor() : MainScreen {
 
     override val destination = plainDestination
 
-    override fun onCreateNavGraph(navGraphBuilder: NavGraphBuilder, mainEvents: MainScreenEvents) {
+    override fun onCreateNavGraph(navGraphBuilder: NavGraphBuilder, featuredEvents: MainScreenEvents) {
         navGraphBuilder.composable(destination) {
             val mainViewModel = hiltViewModel<MainScreenViewModel>()
-            mainViewModel.screenEventsHandler = mainEvents
+            mainViewModel.screenEventsHandler = featuredEvents
             mainScreenView(viewModel = mainViewModel)
         }
     }

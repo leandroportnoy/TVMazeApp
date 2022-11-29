@@ -9,7 +9,6 @@ data class TVShowDetailsResponse(
     @SerializedName("image")
     var images: Image? = null
     var summary: String? = null
-//        get() { return field?.stripHtmlOut() }
     var status: String? = null
     var type: String? = null
     var genres: List<String>? = null

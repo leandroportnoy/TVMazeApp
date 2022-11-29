@@ -1,6 +1,7 @@
 package br.com.las.data.repositories
 
 import androidx.annotation.WorkerThread
+import br.com.las.data.repositories.enum.ShowStatus
 import br.com.las.data.repositories.models.EpisodeModel
 import br.com.las.data.repositories.models.ScheduleModel
 import br.com.las.data.repositories.models.TVShowModel
@@ -34,7 +35,7 @@ internal class TVMazeRepositoryImpl @Inject constructor(private val restApi: Res
                 imageUrl        = result.images?.original
                 thumbnailUrl    = result.images?.medium
                 summary         = result.summary
-                //status        = result.status
+                status          = ShowStatus.valueOf(result.status?.uppercase() ?: ShowStatus.UNKNOWN.name)
                 type            = result.type
                 premiered       = result.premiered
                 genres          = result.genres

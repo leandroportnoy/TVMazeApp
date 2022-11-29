@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TVMazeChallenge</string>
+    <string name="lbl_show_premiered">Premiered: %s</string>
+    <string name="lbl_show_ended">Ended: %s</string>
+    <string name="lbl_show_time">Time: %s</string>
+    <string name="lbl_show_days">Days: %s</string>
+    <string name="lbl_show_status">Status: %s</string>
+    <string name="lbl_show_rating">Rating: </string>
+    <string name="lbl_show_description">Show Description</string>
+    <string name="lbl_episode_description">Episode Description</string>
+    <string name="lbl_show_episodes">Episodes</string>
+    <string name="lbl_season_header">Season %d</string>
+    <string name="lbl_season_episode_number">Season %d / Episode %d</string>
+    <string name="lbl_skip">Skip</string>
+    <string name="lbl_enter_your_pin_code">Enter your PIN Code</string>
+    <string name="lbl_create_pin_code">Create a PIN Code</string>
+    <string name="lbl_welcome">"Welcome TVMaze App"</string>
+    <string name="lbl_no">NO</string>
+    <string name="lbl_yes">YES</string>
+
 </resources>

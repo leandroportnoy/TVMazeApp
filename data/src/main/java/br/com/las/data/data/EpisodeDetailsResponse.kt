@@ -8,7 +8,6 @@ data class EpisodeDetailsResponse (val id: Long, val name: String) {
     @SerializedName("image")
     var images: Image? = null
     var summary: String? = null
-        //get() { return field?.stripHtmlOut() }
     @SerializedName("airdate")
     var airDate: String? = null
     @SerializedName("airtime")

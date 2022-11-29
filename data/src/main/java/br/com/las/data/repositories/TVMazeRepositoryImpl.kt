@@ -53,6 +53,7 @@ internal class TVMazeRepositoryImpl @Inject constructor(private val restApi: Res
             EpisodeModel(it.id, it.name). apply {
                 season = it.season
                 number = it.number
+                imageUrl = it.images?.medium
             }
         }
     }
@@ -65,7 +66,7 @@ internal class TVMazeRepositoryImpl @Inject constructor(private val restApi: Res
             this.airTime = result.airTime
             this.season = result.season
             this.summary = result.summary
-            this.imageUrl = result.images?.original
+            this.imageUrl = result.images?.medium
             this.number = result.number
         }
     }

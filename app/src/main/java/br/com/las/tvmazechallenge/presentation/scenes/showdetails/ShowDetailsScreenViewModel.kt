@@ -28,8 +28,9 @@ internal class ShowDetailsScreenViewModel @Inject constructor(
         if(showId != null) {
             viewModelScope.launch {
                 val tvShowDetail = tvShowRepository.getShowById(showId)
-                _screenState.value = ScreenState.Fetched(tvShowDetail)
+//                _screenState.value = ScreenState.Fetched(tvShowDetail)
                 val episodes = tvShowRepository.getEpisodes(showId)
+                _screenState.value = ScreenState.Fetched(tvShowDetail, episodes)
             }
         }
     }
@@ -40,6 +41,7 @@ internal class ShowDetailsScreenViewModel @Inject constructor(
 
     sealed class ScreenState {
         object Loading : ScreenState()
-        data class Fetched(val tvShowDetail: TVShowModel, val episodes : List<List<EpisodeModel>>? = null) : ScreenState()
+        data class Fetched(val tvShowDetail: TVShowModel, val episodes : List<EpisodeModel>? = null) : ScreenState()
+//        data class Fetched(val tvShowDetail: TVShowModel, val episodes : List<List<EpisodeModel>>? = null) : ScreenState()
     }
 }

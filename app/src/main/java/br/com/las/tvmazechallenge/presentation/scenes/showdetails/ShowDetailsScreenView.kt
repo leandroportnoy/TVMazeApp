@@ -5,32 +5,33 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.StarHalf
 import androidx.compose.material.icons.outlined.StarOutline
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.las.commom.extensions.stripHtmlOut
+import br.com.las.common.extensions.stripHtmlOut
 import br.com.las.data.data.Schedule
 import br.com.las.data.repositories.enum.ShowStatus
 import br.com.las.data.repositories.models.EpisodeModel
 import br.com.las.data.repositories.models.TVShowModel
+import br.com.las.tvmazechallenge.R
 import br.com.las.tvmazechallenge.ui.theme.*
 import coil.compose.rememberImagePainter
-import java.lang.Math.ceil
-import java.lang.Math.floor
 
 @Composable
 internal fun ShowDetailsScreenView(viewModel: ShowDetailsScreenViewModel) {
@@ -49,7 +50,8 @@ internal fun ShowDetailsScreenView(viewModel: ShowDetailsScreenViewModel) {
 @Composable
 internal fun ShowTVShow(
     tvShowDetail: TVShowModel,
-    episodes: List<List<EpisodeModel>>?,
+    episodes: List<EpisodeModel>?,
+//    episodes: List<List<EpisodeModel>>?,
     onEpisodeClicked: (Long) -> Unit
 ) {
     LazyColumn {
@@ -68,6 +70,7 @@ internal fun ShowTVShow(
             Summary(
                 showSummary = tvShowDetail.summary,
                 genres = tvShowDetail.genres,
+                episodes = episodes,
                 rating = tvShowDetail.rating,
                 modifier = Modifier.padding(minPadding)
             )
@@ -146,6 +149,7 @@ private fun Summary(
     showSummary: String?,
     rating: Float,
     genres: List<String>?,
+    episodes: List<EpisodeModel>?,
     modifier: Modifier = Modifier
 ) {
     Box {
@@ -175,10 +179,10 @@ private fun Summary(
                         .padding(8.dp)
                 )
             }
-
+            // seasons area
+            Seasons(episodes)
 
         }
-//        }
     }
 }
 
@@ -214,8 +218,8 @@ private fun RatingBar(
     starsColor: Color = Yellow_600,
 ) {
 
-    val filledStars = floor(rating / 2).toInt()
-    val unfilledStars = (stars - ceil(rating)).toInt()
+    val filledStars = kotlin.math.floor(rating / 2).toInt()
+    val unfilledStars = (stars - kotlin.math.ceil(rating)).toInt()
     val halfStar = !(rating.rem(1).equals(0.0))
 
     Row(modifier = modifier) {
@@ -248,6 +252,81 @@ private fun RatingBar(
     }
 }
 
+@Composable
+fun Seasons(episodes: List<EpisodeModel>?) {
+
+    var lastSeason = 0
+    episodes?.forEach { episode ->
+        if (episode.season != lastSeason) {
+            //season number
+            Row {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(minPadding),
+                    text = "Season ${episode.season}",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
+
+            //episode carrousel by season number
+            val episodesBySeason = episodes.filter { it.season == lastSeason + 1 }
+            LazyHorizontalGrid(
+                rows = GridCells.Fixed(integerResource(id = R.integer.row_number_items)),
+                modifier = Modifier.height(200.dp),
+                contentPadding = PaddingValues(minPadding)
+            ) {
+                items(episodesBySeason) { episode ->
+                    Episode(episode)
+                }
+            }
+
+            lastSeason = episode.season
+        }
+    }
+
+}
+
+@Composable
+fun Episode(
+    episodeModel: EpisodeModel,
+//    onClickListener: () -> Unit
+//    itemClickListener: (EpisodeModel) -> Unit
+) {
+    Card(
+        elevation = CardDefaults.cardElevation(cardElevation),
+        modifier = Modifier
+            .padding(minPadding)
+//            .clickable { onClickListener() }
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            val painter = rememberImagePainter(data = episodeModel.imageUrl)
+
+            Image(
+                painter = painter,
+                contentDescription = episodeModel.name,
+                modifier = Modifier.aspectRatio(3 / 4f),
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.Center,
+            )
+
+            Spacer(modifier = Modifier.height(minPadding))
+
+            Text(
+                text = episodeModel.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp),
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    }
+}
+
 
 @Preview
 @Composable
@@ -270,6 +349,7 @@ fun Test() {
     Summary(
         showSummary = "Test",
         genres = listOf("Drama", "Science-Fiction", "Thriller"),
-        rating = 6.8f
+        rating = 6.8f,
+        episodes = null
     )
 }

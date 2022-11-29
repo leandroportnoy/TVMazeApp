@@ -15,5 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "TVMazeChallenge"
 include ':app'
 include ':data'
-include ':commom'
-include ':scene'
+include ':common'

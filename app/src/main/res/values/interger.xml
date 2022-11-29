@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="row_number_items">1</integer>
     <integer name="grid_number_items">3</integer>
 </resources>

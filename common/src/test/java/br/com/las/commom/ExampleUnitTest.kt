@@ -1,4 +1,4 @@
-package br.com.las.commom
+package br.com.las.common
 
 import org.junit.Test
 

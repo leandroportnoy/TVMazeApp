@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'br.com.las.commom'
+    namespace 'br.com.las.common'
     compileSdk 32
 
     defaultConfig {
